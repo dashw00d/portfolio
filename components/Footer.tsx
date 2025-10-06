@@ -28,20 +28,20 @@ export default function Footer() {
             <div className="space-y-3 text-sm">
               <div className="flex items-center gap-2 text-zinc-400">
                 <Mail className="h-4 w-4" />
-                <a href="mailto:you@example.com" className="hover:text-white transition-colors">
-                  you@example.com
+                <a href="letmegoblind@gmail.com" className="hover:text-white transition-colors">
+                  letmegoblind@gmail.com
                 </a>
               </div>
               <div className="flex items-center gap-2 text-zinc-400">
                 <MapPin className="h-4 w-4" />
-                <span>Dallas, TX • Working nationwide</span>
+                <span>Houston, TX • Working nationwide</span>
               </div>
             </div>
           </div>
         </div>
 
         <div className="border-t border-zinc-800 mt-8 pt-8 text-center text-sm text-zinc-500">
-          <p>&copy; 2025 Your Name. All rights reserved.</p>
+          <p>&copy; 2025 Ryan Stefan. All rights reserved.</p>
         </div>
       </div>
     </footer>

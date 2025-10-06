@@ -57,18 +57,20 @@ export default function TerminalBlock({ title, lines }: TerminalBlockProps) {
   const typed = useTypeLines(lines, inView, 18, 280);
 
   return (
-    <div ref={ref} className="rounded-2xl border bg-gradient-to-br from-zinc-950 to-zinc-900 text-zinc-100 shadow-lg">
-      <div className="flex items-center gap-2 border-b border-zinc-800/50 p-3 bg-zinc-900/30">
-        <div className="h-3 w-3 rounded-full bg-red-500" />
-        <div className="h-3 w-3 rounded-full bg-yellow-500" />
-        <div className="h-3 w-3 rounded-full bg-green-500" />
-        <span className="ml-3 text-xs text-zinc-400">{title}</span>
+    <div ref={ref} className="rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-950 to-zinc-900 text-zinc-100 shadow-2xl overflow-hidden">
+      <div className="flex items-center gap-2 border-b border-zinc-800/50 p-4 bg-zinc-900/50">
+        <div className="h-3 w-3 rounded-full bg-red-500 shadow-lg shadow-red-500/30" />
+        <div className="h-3 w-3 rounded-full bg-yellow-500 shadow-lg shadow-yellow-500/30" />
+        <div className="h-3 w-3 rounded-full bg-green-500 shadow-lg shadow-green-500/30" />
+        <span className="ml-3 text-sm text-zinc-400 font-medium">{title}</span>
       </div>
-      <div className="p-4">
-        <code className="block whitespace-pre-wrap text-sm leading-6">
+      <div className="p-6 min-h-[280px] flex flex-col justify-center">
+        <code className="block whitespace-pre-wrap text-base leading-7">
           {typed.map((t, i) => (
-            <div key={i} className="font-mono">
-              <span className="text-zinc-400">$</span> {t}{i === typed.length - 1 && <BlinkingCursor />}
+            <div key={i} className="font-mono mb-2">
+              <span className="text-green-400 font-bold">$</span>{" "}
+              <span className="text-zinc-100">{t}</span>
+              {i === typed.length - 1 && <BlinkingCursor />}
             </div>
           ))}
         </code>

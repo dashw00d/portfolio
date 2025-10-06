@@ -1,58 +1,97 @@
 import React from "react";
+import Link from "next/link";
+
+const CASES = [
+  {
+    sector: "Local Services",
+    title: "Invisible on Google → booked out",
+    summary: "Location pages + review engine + structured data that moved them from page 4 to the top map pack.",
+    before: "12 organic leads/mo",
+    after: "42 organic leads/mo",
+    tags: ["Local SEO", "GBP optimisation", "Content architecture"],
+  },
+  {
+    sector: "DTC Ecommerce",
+    title: "9s checkout → 0.9s, 40% more conversions",
+    summary: "Image optimisation, database tuning, and edge caching gave their campaigns room to scale.",
+    before: "9.1s LCP",
+    after: "0.9s LCP",
+    tags: ["Performance", "MySQL tuning", "Vercel Edge"],
+  },
+  {
+    sector: "SaaS",
+    title: "Portal shipped in 6 weeks, not 6 months",
+    summary: "Customer dashboard integrating billing, roles, and usage analytics built on Laravel + Livewire.",
+    before: "No self-serve access",
+    after: "1k users onboarded",
+    tags: ["Laravel", "Livewire", "Product delivery"],
+  },
+  {
+    sector: "Professional Services",
+    title: "Emails hitting spam? 98% inbox rate now",
+    summary: "Deliverability overhaul: DNS, dedicated sending domains, and warming schedule with reporting.",
+    before: "60% delivery",
+    after: "98% delivery",
+    tags: ["SPF/DKIM", "Sendgrid", "Warm up"],
+  },
+];
 
 export default function Examples() {
   return (
-    <section id="examples" className="bg-gradient-to-br from-blue-50 to-purple-50 py-20">
+    <section id="examples" className="bg-gradient-to-br from-blue-50 via-white to-purple-50 py-24">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold text-zinc-900 mb-4">Recent problems I've solved</h2>
-          <p className="text-xl text-zinc-600">Every business is different. Here's the kind of work I do.</p>
+        <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h2 className="text-4xl font-bold text-zinc-900 md:text-5xl">Proof it works in the real world</h2>
+            <p className="mt-3 max-w-2xl text-lg text-zinc-600">
+              Each project starts by quantifying the leak, then ends with a before/after you can show investors, partners, or your team.
+            </p>
+          </div>
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 rounded-xl border border-blue-200 bg-white px-5 py-3 text-sm font-semibold text-blue-600 shadow-sm transition hover:border-blue-300 hover:text-blue-700"
+          >
+            View in-depth demos
+            <span aria-hidden>→</span>
+          </Link>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="bg-white border border-zinc-200 rounded-xl p-6 shadow-sm">
-            <div className="text-sm font-semibold text-blue-600 mb-2">Local Service Business</div>
-            <h3 className="font-bold text-lg text-zinc-900 mb-3">Google couldn't find them. Now they're #1.</h3>
-            <p className="text-sm text-zinc-600 mb-4">Built location pages, fixed technical SEO, set up Google Business properly. Went from page 4 to top 3 in 60 days. Calls increased 3x.</p>
-            <div className="flex flex-wrap gap-2">
-              <span className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded-full">Local SEO</span>
-              <span className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded-full">Technical fixes</span>
-              <span className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded-full">Content strategy</span>
-            </div>
-          </div>
-
-          <div className="bg-white border border-zinc-200 rounded-xl p-6 shadow-sm">
-            <div className="text-sm font-semibold text-purple-600 mb-2">E-commerce Site</div>
-            <h3 className="font-bold text-lg text-zinc-900 mb-3">Slow checkout killing sales. Fixed it.</h3>
-            <p className="text-sm text-zinc-600 mb-4">Load time was 9 seconds. Optimized images, rewrote slow queries, set up proper caching. Got it to 2.3 seconds. Cart abandonment dropped 40%.</p>
-            <div className="flex flex-wrap gap-2">
-              <span className="text-xs px-2 py-1 bg-purple-50 text-purple-700 rounded-full">Performance</span>
-              <span className="text-xs px-2 py-1 bg-purple-50 text-purple-700 rounded-full">Database optimization</span>
-              <span className="text-xs px-2 py-1 bg-purple-50 text-purple-700 rounded-full">CDN setup</span>
-            </div>
-          </div>
-
-          <div className="bg-white border border-zinc-200 rounded-xl p-6 shadow-sm">
-            <div className="text-sm font-semibold text-green-600 mb-2">SaaS Startup</div>
-            <h3 className="font-bold text-lg text-zinc-900 mb-3">Built their customer portal from scratch</h3>
-            <p className="text-sm text-zinc-600 mb-4">Needed custom dashboards, billing integration, user management. Built with Laravel + Livewire. Launched in 6 weeks instead of 6 months.</p>
-            <div className="flex flex-wrap gap-2">
-              <span className="text-xs px-2 py-1 bg-green-50 text-green-700 rounded-full">Custom development</span>
-              <span className="text-xs px-2 py-1 bg-green-50 text-green-700 rounded-full">Laravel</span>
-              <span className="text-xs px-2 py-1 bg-green-50 text-green-700 rounded-full">API integration</span>
-            </div>
-          </div>
-
-          <div className="bg-white border border-zinc-200 rounded-xl p-6 shadow-sm">
-            <div className="text-sm font-semibold text-orange-600 mb-2">Professional Services</div>
-            <h3 className="font-bold text-lg text-zinc-900 mb-3">Emails going to spam. Fixed infrastructure.</h3>
-            <p className="text-sm text-zinc-600 mb-4">Set up proper DNS records, configured SendGrid correctly, built email warming process. Delivery rate went from 60% to 98%.</p>
-            <div className="flex flex-wrap gap-2">
-              <span className="text-xs px-2 py-1 bg-orange-50 text-orange-700 rounded-full">Email deliverability</span>
-              <span className="text-xs px-2 py-1 bg-orange-50 text-orange-700 rounded-full">DNS config</span>
-              <span className="text-xs px-2 py-1 bg-orange-50 text-orange-700 rounded-full">Monitoring</span>
-            </div>
-          </div>
+          {CASES.map((item) => (
+            <article
+              key={item.title}
+              className="group flex flex-col gap-5 rounded-3xl border border-zinc-200 bg-white/80 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+            >
+              <div className="flex items-center justify-between text-xs uppercase tracking-widest text-blue-500">
+                <span>{item.sector}</span>
+                <span className="rounded-full bg-blue-500/10 px-3 py-1 text-[11px] font-semibold text-blue-600">
+                  Case snapshot
+                </span>
+              </div>
+              <h3 className="text-xl font-semibold text-zinc-900">{item.title}</h3>
+              <p className="text-sm leading-relaxed text-zinc-600">{item.summary}</p>
+              <div className="grid grid-cols-2 gap-4 rounded-2xl border border-zinc-100 bg-zinc-50/70 p-4 text-sm">
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-zinc-400">Before</p>
+                  <p className="mt-1 font-semibold text-zinc-800">{item.before}</p>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-emerald-500">After</p>
+                  <p className="mt-1 font-semibold text-emerald-600">{item.after}</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {item.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-600"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
