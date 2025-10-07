@@ -56,7 +56,7 @@ export default function Hero() {
             </div>
             <div>
               <div className="text-sm font-semibold text-zinc-900">Ryan Stefan</div>
-              <div className="text-sm text-zinc-500">Full-Stack Developer & Business Problem Solver</div>
+              <div className="text-sm text-zinc-500">Full-Stack Developer & Technical Problem Solver</div>
             </div>
           </div>
 
