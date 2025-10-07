@@ -107,7 +107,7 @@ Let&apos;s talk
               </li>
             </ul>
             <div className="rounded-2xl border border-brand-500/30 bg-brand-500/10 p-4 text-sm text-brand-100">
-              Prefer email? <a href="mailto:letmegoblind@gmail.com" className="font-semibold text-white underline underline-offset-4">letmegoblind@gmail.com</a>
+              Prefer email? <a href="mailto:ryan@dashwood.net" className="font-semibold text-white underline underline-offset-4">ryan@dashwood.net</a>
             </div>
           </div>
 

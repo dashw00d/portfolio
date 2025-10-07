@@ -77,8 +77,8 @@ export default function Footer() {
             <div className="space-y-3 text-sm">
               <div className="flex items-center gap-2 text-zinc-400">
                 <Mail className="h-4 w-4 flex-shrink-0" />
-                <a href="mailto:ryan@stefan.dev" className="hover:text-white transition-colors break-all">
-                  ryan@stefan.dev
+                <a href="mailto:ryan@dashwood.net" className="hover:text-white transition-colors break-all">
+                  ryan@dashwood.net
                 </a>
               </div>
               <div className="flex items-center gap-2 text-zinc-400">

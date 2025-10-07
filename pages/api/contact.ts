@@ -61,8 +61,10 @@ export default async function handler(
     },
   });
 
-  const recipient = CONTACT_TO ?? SMTP_USER ?? CONTACT_FROM ?? email;
-  const fromAddress = CONTACT_FROM ?? SMTP_USER ?? "portfolio-contact@localhost";
+  const defaultContactEmail = "ryan@dashwood.net";
+
+  const recipient = CONTACT_TO ?? CONTACT_FROM ?? SMTP_USER ?? defaultContactEmail;
+  const fromAddress = CONTACT_FROM ?? SMTP_USER ?? defaultContactEmail;
 
   const subject = `New inquiry from ${name}`;
   const textBody = `Name: ${name}

@@ -69,7 +69,7 @@ export default function Hero() {
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
             </a>
             <a
-              href="mailto:you@example.com"
+              href="mailto:ryan@dashwood.net"
               className="inline-flex items-center gap-2 rounded-xl border border-zinc-300 bg-white px-6 py-3 font-semibold text-zinc-700 shadow-sm transition hover:border-brand-300 hover:text-brand-600"
             >
               <Mail className="h-4 w-4" />

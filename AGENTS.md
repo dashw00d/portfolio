@@ -20,9 +20,9 @@ SMTP_HOST=your.smtp.host
 SMTP_PORT=587          # use 465 for SSL
 SMTP_USER=your-username
 SMTP_PASS=your-password
-CONTACT_TO=alerts@example.com
-CONTACT_FROM=Portfolio <alerts@example.com>  # optional override
-CONTACT_BCC=ops@example.com                  # optional
+CONTACT_TO=ryan@dashwood.net
+CONTACT_FROM=Portfolio <ryan@dashwood.net>   # optional override
+CONTACT_BCC=ryan@dashwood.net                # optional
 ```
 
 Run `npm install` after setting these to ensure dependencies are installed, then `npm run dev` or `npm run build`.
