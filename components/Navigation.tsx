@@ -26,12 +26,13 @@ export default function Navigation() {
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'
+      isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-lg border-b border-brand-100/50' : 'bg-transparent'
     }`}>
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="text-xl font-bold text-zinc-900">
-            Ryan Stefan
+          <Link href="/" className="text-xl font-bold flex items-baseline hover:cursor-pointer group">
+            <span className="text-zinc-900 font-light group-hover:font-bold transition-all duration-300">Ryan</span>
+            <span className="text-success-700 font-bold ml-0.5">Stefan</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -40,7 +41,7 @@ export default function Navigation() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-zinc-700 transition-colors hover:text-blue-600 font-medium"
+                className="text-zinc-700 transition-all hover:text-brand-600 font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-brand-500 after:to-accent-500 after:transition-all hover:after:w-full"
               >
                 {item.name}
               </Link>
@@ -64,7 +65,7 @@ export default function Navigation() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block px-3 py-2 text-zinc-700 transition-colors hover:text-blue-600"
+                  className="block px-3 py-2 text-zinc-700 transition-colors hover:text-brand-600"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.name}

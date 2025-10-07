@@ -6,7 +6,6 @@ import Problems from "../components/Problems";
 import Services from "../components/Services";
 import Process from "../components/Process";
 import Examples from "../components/Examples";
-import Testimonials from "../components/Testimonials";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 
@@ -29,13 +28,12 @@ export default function Home() {
 
       <Navigation />
 
-      <main className="min-h-screen bg-gradient-to-br from-zinc-50 via-blue-50/20 to-white text-zinc-900">
+      <main className="min-h-screen bg-gradient-to-br from-zinc-50 via-brand-50/20 to-white text-zinc-900">
         <Hero />
         <Problems />
         <Services />
         <Process />
         <Examples />
-        <Testimonials />
         <Contact />
       </main>
 

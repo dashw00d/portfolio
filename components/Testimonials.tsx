@@ -27,8 +27,11 @@ export default function Testimonials() {
   ];
 
   return (
-    <section className="py-20 bg-white">
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="relative overflow-hidden bg-gradient-to-b from-white via-highlight-50/70 to-white py-20">
+      <div className="pointer-events-none absolute inset-x-0 -top-20 h-24 bg-gradient-to-b from-brand-900/15 via-highlight-200/40 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 -bottom-20 h-24 bg-gradient-to-t from-brand-950/35 via-brand-900/15 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,_rgba(3,54,73,0.12),_transparent_60%)]" />
+      <div className="relative mx-auto max-w-6xl px-6">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-zinc-900 mb-4">What Clients Say</h2>
           <p className="text-xl text-zinc-600">Real feedback from real business owners</p>
@@ -36,17 +39,17 @@ export default function Testimonials() {
 
         <div className="grid gap-8 md:grid-cols-3">
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-zinc-50 border border-zinc-200 rounded-xl p-6 relative">
-              <Quote className="h-8 w-8 text-blue-500 mb-4 opacity-20" />
+            <div key={index} className="relative rounded-3xl border border-zinc-200/80 bg-white/90 p-6 shadow-sm backdrop-blur">
+              <Quote className="h-8 w-8 text-brand-500 mb-4 opacity-20" />
 
               <div className="flex mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  <Star key={i} className="h-4 w-4 fill-warning-400 text-warning-400" />
                 ))}
               </div>
 
               <p className="text-zinc-700 mb-6 leading-relaxed">
-                "{testimonial.content}"
+                &ldquo;{testimonial.content}&rdquo;
               </p>
 
               <div>

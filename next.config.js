@@ -1,12 +1,14 @@
 /** @type {import('next').NextConfig} */
+
+const useStaticExport = process.env.STATIC_EXPORT === 'true';
+
 const nextConfig = {
-  output: 'export',
-  trailingSlash: true,
-  images: {
-    unoptimized: true
-  },
-  assetPrefix: process.env.NODE_ENV === 'production' ? './' : '',
-  basePath: process.env.NODE_ENV === 'production' ? '' : ''
+  ...(useStaticExport ? { output: 'export', trailingSlash: true } : {}),
+  images: useStaticExport
+    ? { unoptimized: true }
+    : { domains: [] },
+  assetPrefix: useStaticExport ? './' : '',
+  basePath: ''
 }
 
 module.exports = nextConfig

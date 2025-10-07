@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import nodemailer from "nodemailer";
 
 interface ContactPayload {
   name?: string;
@@ -13,7 +14,19 @@ interface ApiResponse {
   message: string;
 }
 
-const WEBHOOK_URL = process.env.CONTACT_WEBHOOK_URL;
+const {
+  SMTP_HOST,
+  SMTP_PORT,
+  SMTP_USER,
+  SMTP_PASS,
+  CONTACT_TO,
+  CONTACT_FROM,
+  CONTACT_BCC,
+} = process.env;
+
+function missingMailConfig() {
+  return !SMTP_HOST || !SMTP_PORT || !(SMTP_USER && SMTP_PASS) || !(CONTACT_TO || CONTACT_FROM || SMTP_USER);
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -32,51 +45,77 @@ export default async function handler(
       .json({ success: false, message: "Name, email, and project details are required." });
   }
 
-  const payload = {
-    name,
-    email,
-    company: company ?? "",
-    project,
-    timeline: timeline ?? "",
-    submittedAt: new Date().toISOString(),
-    source: "portfolio-contact-form",
-  };
-
-  if (!WEBHOOK_URL) {
-    console.warn(
-      "CONTACT_WEBHOOK_URL not configured. Configure it to forward contact form submissions."
-    );
-    console.info("Received contact submission:", payload);
-    return res
-      .status(200)
-      .json({
-        success: true,
-        message: "Message received locally. Configure CONTACT_WEBHOOK_URL to forward it.",
-      });
+  if (missingMailConfig()) {
+    console.warn("SMTP environment variables are not fully configured. Contact form submission was logged instead.");
+    console.info({ name, email, company, project, timeline, submittedAt: new Date().toISOString() });
+    return res.status(200).json({ success: true, message: "Message received locally. Configure SMTP to forward it." });
   }
 
+  const transporter = nodemailer.createTransport({
+    host: SMTP_HOST,
+    port: Number(SMTP_PORT ?? 587),
+    secure: Number(SMTP_PORT ?? 587) === 465,
+    auth: {
+      user: SMTP_USER,
+      pass: SMTP_PASS,
+    },
+  });
+
+  const recipient = CONTACT_TO ?? SMTP_USER ?? CONTACT_FROM ?? email;
+  const fromAddress = CONTACT_FROM ?? SMTP_USER ?? "portfolio-contact@localhost";
+
+  const subject = `New inquiry from ${name}`;
+  const textBody = `Name: ${name}
+Email: ${email}
+Company: ${company ?? "--"}
+Timeline: ${timeline ?? "--"}
+
+Project details:
+${project}
+`;
+
+  const htmlBody = `
+    <h2 style="margin:0 0 16px;font-size:20px;font-family:Inter,Arial,sans-serif;color:#063533;">New inquiry</h2>
+    <table style="width:100%;border-collapse:collapse;font-family:Inter,Arial,sans-serif;color:#1f2933;font-size:14px;">
+      <tbody>
+        <tr>
+          <td style="padding:6px 0;font-weight:600;width:110px;">Name</td>
+          <td style="padding:6px 0;">${name}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;font-weight:600;">Email</td>
+          <td style="padding:6px 0;">${email}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;font-weight:600;">Company</td>
+          <td style="padding:6px 0;">${company ?? "&mdash;"}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;font-weight:600;">Timeline</td>
+          <td style="padding:6px 0;">${timeline ?? "&mdash;"}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:20px;padding:16px;background:#f5f7fa;border-radius:12px;line-height:1.6;color:#1f2933;">
+      <p style="margin:0 0 8px;font-weight:600;">Project details</p>
+      <p style="margin:0;white-space:pre-line;">${project}</p>
+    </div>
+  `;
+
   try {
-    const webhookResponse = await fetch(WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+    await transporter.sendMail({
+      from: fromAddress,
+      to: recipient,
+      bcc: CONTACT_BCC,
+      replyTo: email,
+      subject,
+      text: textBody,
+      html: htmlBody,
     });
 
-    if (!webhookResponse.ok) {
-      const text = await webhookResponse.text();
-      console.error("Failed to forward contact submission:", text);
-      return res
-        .status(502)
-        .json({ success: false, message: "Unable to forward the message right now." });
-    }
-
-    return res
-      .status(200)
-      .json({ success: true, message: "Message sent successfully." });
+    return res.status(200).json({ success: true, message: "Message sent successfully." });
   } catch (error) {
-    console.error("Contact form error:", error);
-    return res
-      .status(500)
-      .json({ success: false, message: "Unexpected error while sending your message." });
+    console.error("Contact form mail error:", error);
+    return res.status(500).json({ success: false, message: "Failed to send email." });
   }
 }

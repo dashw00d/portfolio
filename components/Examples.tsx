@@ -5,51 +5,67 @@ const CASES = [
   {
     sector: "Local Services",
     title: "Invisible on Google → booked out",
-    summary: "Location pages + review engine + structured data that moved them from page 4 to the top map pack.",
+    summary: "Comprehensive local SEO overhaul: virtual address setup, internal linking architecture, location pages, review engine automation, structured data markup, GMB optimization, and citation building moved them from page 4 to top map pack position.",
     before: "12 organic leads/mo",
     after: "42 organic leads/mo",
-    tags: ["Local SEO", "GBP optimisation", "Content architecture"],
+    tags: ["Local SEO", "Virtual Address", "Internal Linking", "GMB Optimization"],
+    accentColor: "brand",
   },
   {
-    sector: "DTC Ecommerce",
-    title: "9s checkout → 0.9s, 40% more conversions",
-    summary: "Image optimisation, database tuning, and edge caching gave their campaigns room to scale.",
-    before: "9.1s LCP",
-    after: "0.9s LCP",
-    tags: ["Performance", "MySQL tuning", "Vercel Edge"],
+    sector: "Performance Optimization",
+    title: "WordPress blog migrated to custom platform",
+    summary: "Switched from 9-second loading WordPress blog to custom platform with Livewire SPA, lazy loading, advanced caching, font swapping, and comprehensive SEO optimization.",
+    before: "9s page load time",
+    after: "0.8s average load time",
+    tags: ["Livewire", "SPA", "SEO Optimization", "Performance"],
+    accentColor: "success",
   },
   {
-    sector: "SaaS",
-    title: "Portal shipped in 6 weeks, not 6 months",
-    summary: "Customer dashboard integrating billing, roles, and usage analytics built on Laravel + Livewire.",
-    before: "No self-serve access",
-    after: "1k users onboarded",
-    tags: ["Laravel", "Livewire", "Product delivery"],
+    sector: "Staffing & Events",
+    title: "Event staffing platform shipped in 6 weeks",
+    summary: "Complete staffing management system with event calendar, hire/assign/pay staff, automated email & SMS notifications, role-based access, comprehensive reporting, and payment processing.",
+    before: "Manual Excel spreadsheets & phone calls",
+    after: "500+ events staffed, 2k+ staff managed",
+    tags: ["Laravel", "Livewire", "Event Management", "SMS Integration"],
+    accentColor: "accent",
   },
   {
-    sector: "Professional Services",
+    sector: "Email Marketing",
     title: "Emails hitting spam? 98% inbox rate now",
-    summary: "Deliverability overhaul: DNS, dedicated sending domains, and warming schedule with reporting.",
+    summary: "Complete email deliverability overhaul: DNS configuration, dedicated sending domains, warming schedule, unsubscribe compliance, dead email culling, engagement segmentation, IP reputation monitoring, and comprehensive deliverability reporting.",
     before: "60% delivery",
     after: "98% delivery",
-    tags: ["SPF/DKIM", "Sendgrid", "Warm up"],
+    tags: ["SPF/DKIM", "Sendgrid", "Email Compliance", "List Hygiene"],
+    accentColor: "highlight",
   },
 ];
 
 export default function Examples() {
   return (
-    <section id="examples" className="bg-gradient-to-br from-blue-50 via-white to-purple-50 py-24">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="examples" className="relative overflow-hidden bg-gradient-to-br from-brand-50 via-white to-highlight-50 py-24">
+      <div className="pointer-events-none absolute inset-x-0 -top-24 h-32 bg-gradient-to-b from-highlight-100/60 via-white/60 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 -bottom-24 h-32 bg-gradient-to-t from-brand-900/15 via-brand-800/5 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(3,101,100,0.08),_transparent_65%)]" />
+      <div className="relative mx-auto max-w-6xl px-6">
+        {/* Decorative elements */}
+        <div className="pointer-events-none absolute left-4 top-16 h-3 w-3 rounded-full bg-success-400/20 animate-ping" />
+        <div className="pointer-events-none absolute right-8 top-24 h-1 w-12 rounded-full bg-brand-400/15 animate-pulse" style={{animationDelay: '0.5s'}} />
+        <div className="pointer-events-none absolute left-1/3 bottom-16 h-4 w-4 rotate-45 bg-accent-400/25 animate-bounce" style={{animationDelay: '1.5s'}} />
+
         <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="text-4xl font-bold text-zinc-900 md:text-5xl">Proof it works in the real world</h2>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-success-50 to-brand-50 px-4 py-2 text-sm font-medium text-success-700">
+              <span className="h-2 w-2 rounded-full bg-success-500 animate-pulse"></span>
+              Real results
+            </div>
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-zinc-900 to-brand-800 bg-clip-text text-transparent md:text-5xl">Proof it works in the real world</h2>
             <p className="mt-3 max-w-2xl text-lg text-zinc-600">
               Each project starts by quantifying the leak, then ends with a before/after you can show investors, partners, or your team.
             </p>
           </div>
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 rounded-xl border border-blue-200 bg-white px-5 py-3 text-sm font-semibold text-blue-600 shadow-sm transition hover:border-blue-300 hover:text-blue-700"
+            className="inline-flex items-center gap-2 rounded-xl border border-brand-200 bg-white px-5 py-3 text-sm font-semibold text-brand-600 shadow-sm transition hover:border-brand-300 hover:text-brand-700"
           >
             View in-depth demos
             <span aria-hidden>→</span>
@@ -60,11 +76,41 @@ export default function Examples() {
           {CASES.map((item) => (
             <article
               key={item.title}
-              className="group flex flex-col gap-5 rounded-3xl border border-zinc-200 bg-white/80 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+              className={`group flex flex-col gap-5 rounded-3xl border border-zinc-200 bg-white/80 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl relative overflow-hidden ${
+                item.accentColor === 'brand'
+                  ? 'before:bg-brand-500'
+                  : item.accentColor === 'success'
+                  ? 'before:bg-success-500'
+                  : item.accentColor === 'accent'
+                  ? 'before:bg-accent-500'
+                  : item.accentColor === 'highlight'
+                  ? 'before:bg-highlight-500'
+                  : 'before:bg-zinc-500'
+              } before:absolute before:left-0 before:top-0 before:h-full before:w-1`}
             >
-              <div className="flex items-center justify-between text-xs uppercase tracking-widest text-blue-500">
+              <div className={`flex items-center justify-between text-xs uppercase tracking-widest ${
+                item.accentColor === 'brand'
+                  ? 'text-brand-600'
+                  : item.accentColor === 'success'
+                  ? 'text-success-600'
+                  : item.accentColor === 'accent'
+                  ? 'text-accent-600'
+                  : item.accentColor === 'highlight'
+                  ? 'text-highlight-600'
+                  : 'text-zinc-600'
+              }`}>
                 <span>{item.sector}</span>
-                <span className="rounded-full bg-blue-500/10 px-3 py-1 text-[11px] font-semibold text-blue-600">
+                <span className={`rounded-full px-3 py-1 text-[11px] font-semibold ${
+                  item.accentColor === 'brand'
+                    ? 'bg-brand-500/10 text-brand-700'
+                    : item.accentColor === 'success'
+                    ? 'bg-success-500/10 text-success-700'
+                    : item.accentColor === 'accent'
+                    ? 'bg-accent-500/10 text-accent-700'
+                    : item.accentColor === 'highlight'
+                    ? 'bg-highlight-500/10 text-highlight-700'
+                    : 'bg-zinc-500/10 text-zinc-700'
+                }`}>
                   Case snapshot
                 </span>
               </div>
@@ -76,15 +122,25 @@ export default function Examples() {
                   <p className="mt-1 font-semibold text-zinc-800">{item.before}</p>
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-widest text-emerald-500">After</p>
-                  <p className="mt-1 font-semibold text-emerald-600">{item.after}</p>
+                  <p className="text-xs uppercase tracking-widest text-success-600 font-semibold">After</p>
+                  <p className="mt-1 font-bold text-success-700">{item.after}</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2">
                 {item.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-600"
+                    className={`rounded-full px-3 py-1 text-xs font-medium ${
+                      item.accentColor === 'brand'
+                        ? 'bg-brand-500/10 text-brand-700'
+                        : item.accentColor === 'success'
+                        ? 'bg-success-500/10 text-success-700'
+                        : item.accentColor === 'accent'
+                        ? 'bg-accent-500/10 text-accent-700'
+                        : item.accentColor === 'highlight'
+                        ? 'bg-highlight-500/10 text-highlight-700'
+                        : 'bg-zinc-500/10 text-zinc-700'
+                    }`}
                   >
                     {tag}
                   </span>

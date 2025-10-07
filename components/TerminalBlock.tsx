@@ -33,7 +33,7 @@ function useTypeLines(lines: string[], isActive: boolean, speed = 24, lineDelay 
 }
 
 function BlinkingCursor() {
-  return <span className="inline-block w-2 translate-y-[2px] border-l-2 border-blue-400 animate-pulse" aria-hidden="true"/>;
+  return <span className="inline-block w-2 translate-y-[2px] border-l-2 border-brand-400 animate-pulse" aria-hidden="true"/>;
 }
 
 interface TerminalBlockProps {
@@ -59,16 +59,16 @@ export default function TerminalBlock({ title, lines }: TerminalBlockProps) {
   return (
     <div ref={ref} className="rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-950 to-zinc-900 text-zinc-100 shadow-2xl overflow-hidden">
       <div className="flex items-center gap-2 border-b border-zinc-800/50 p-4 bg-zinc-900/50">
-        <div className="h-3 w-3 rounded-full bg-red-500 shadow-lg shadow-red-500/30" />
-        <div className="h-3 w-3 rounded-full bg-yellow-500 shadow-lg shadow-yellow-500/30" />
-        <div className="h-3 w-3 rounded-full bg-green-500 shadow-lg shadow-green-500/30" />
+        <div className="h-3 w-3 rounded-full bg-danger-500 shadow-lg shadow-danger-500/30" />
+        <div className="h-3 w-3 rounded-full bg-warning-500 shadow-lg shadow-warning-500/30" />
+        <div className="h-3 w-3 rounded-full bg-success-500 shadow-lg shadow-success-500/30" />
         <span className="ml-3 text-sm text-zinc-400 font-medium">{title}</span>
       </div>
       <div className="p-6 min-h-[280px] flex flex-col justify-center">
         <code className="block whitespace-pre-wrap text-base leading-7">
           {typed.map((t, i) => (
             <div key={i} className="font-mono mb-2">
-              <span className="text-green-400 font-bold">$</span>{" "}
+              <span className="text-success-400 font-bold">$</span>{" "}
               <span className="text-zinc-100">{t}</span>
               {i === typed.length - 1 && <BlinkingCursor />}
             </div>
