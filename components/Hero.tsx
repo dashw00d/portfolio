@@ -3,7 +3,33 @@ import Link from "next/link";
 import { ArrowRight, Mail, ShieldCheck, Rocket, LineChart } from "lucide-react";
 import CustomBuildCta from "./CustomBuildCta";
 
+const QUARTER_BOOKING_COPY: Record<number, string> = {
+  1: "Booking custom app builds for Q1",
+  2: "Booking custom app builds for Q2",
+  3: "Booking custom app builds for Q3",
+  4: "Booking custom app builds for Q4",
+};
+
+const getQuarterFromDate = (date: Date) => Math.floor(date.getMonth() / 3) + 1;
+
+const getQuarterBookingCopy = (date: Date) => {
+  const quarter = getQuarterFromDate(date);
+  return QUARTER_BOOKING_COPY[quarter] ?? "Booking custom app builds";
+};
+
+const useQuarterBookingCopy = () => {
+  const [copy, setCopy] = React.useState(() => getQuarterBookingCopy(new Date()));
+
+  React.useEffect(() => {
+    setCopy(getQuarterBookingCopy(new Date()));
+  }, []);
+
+  return copy;
+};
+
 export default function Hero() {
+  const quarterBookingCopy = useQuarterBookingCopy();
+
   return (
     <section
       id="home"
@@ -29,7 +55,7 @@ export default function Hero() {
         <div className="max-w-3xl">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-brand-200/70 bg-white/70 px-4 py-1.5 text-sm font-medium text-brand-700 shadow-sm backdrop-blur">
             <div className="h-2 w-2 animate-pulse rounded-full bg-success-500" />
-            Booking projects for Q2
+            <span suppressHydrationWarning>{quarterBookingCopy}</span>
           </div>
 
           <h1 className="mb-6 text-5xl font-black tracking-tight bg-gradient-to-r from-zinc-900 via-brand-900 to-accent-900 bg-clip-text text-transparent md:text-7xl">
