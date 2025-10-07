@@ -55,7 +55,7 @@ export default function Footer() {
                   <a href="#examples" className="text-zinc-400 hover:text-white transition-colors">Examples</a>
                 </li>
                 <li>
-                  <a href="#contact" className="text-zinc-400 hover:text-white transition-colors">Contact</a>
+                <a href="#contact-form" className="text-zinc-400 hover:text-white transition-colors">Contact</a>
                 </li>
               </ul>
             </nav>

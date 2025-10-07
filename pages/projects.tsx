@@ -4,6 +4,7 @@ import Link from "next/link";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import Contact from "../components/Contact";
+import CustomBuildCta from "../components/CustomBuildCta";
 
 const DEMOS = [
   {
@@ -75,6 +76,15 @@ export default function Projects() {
             <p className="text-lg leading-relaxed text-zinc-600">
               A curated look at systems I deliver for owners—landing pages, dashboards, and automations that solve the problems we chat about on our intro call.
             </p>
+            <div className="mt-2">
+              <CustomBuildCta
+                href="#contact-form"
+                className="mx-auto w-full max-w-xl"
+                eyebrow="Have a blank canvas?"
+                headline="Kick off a custom product build"
+                subcopy="Share your roadmap and I\'ll scope the architecture, team, and delivery milestones."
+              />
+            </div>
           </div>
         </section>
 

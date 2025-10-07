@@ -111,7 +111,11 @@ Let&apos;s talk
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-brand-500/40 bg-white/10 p-8 shadow-xl shadow-brand-950/30 backdrop-blur">
+          <form
+            id="contact-form"
+            onSubmit={handleSubmit}
+            className="space-y-6 rounded-3xl border border-brand-500/40 bg-white/10 p-8 shadow-xl shadow-brand-950/30 backdrop-blur"
+          >
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-[0.3em] text-brand-200">

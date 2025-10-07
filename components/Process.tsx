@@ -108,7 +108,7 @@ export default function Process() {
                   <p className="mt-2 text-lg font-semibold text-slate-900">Most first engagements wrap in 2–4 weeks on a fixed fee.</p>
                 </div>
                 <a
-                  href="#contact"
+                  href="#contact-form"
                   className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-600 to-accent-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-500/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-500/50"
                 >
                   Hold a discovery call

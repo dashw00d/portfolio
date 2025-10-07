@@ -257,7 +257,7 @@ function CtaCard() {
         I&apos;ll review performance, deliverability, and lead flows, then we walk the findings together on a 20-minute video call.
       </p>
       <a
-        href="#contact"
+        href="#contact-form"
         className="mt-4 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-600 to-accent-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-brand-500/30 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 hover:shadow-lg hover:shadow-brand-500/40"
       >
         Hold my spot

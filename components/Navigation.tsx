@@ -21,7 +21,7 @@ export default function Navigation() {
     { name: 'Process', href: '/#process' },
     { name: 'Examples', href: '/#examples' },
     { name: 'Projects', href: '/projects' },
-    { name: 'Contact', href: '/#contact' },
+    { name: 'Contact', href: '/#contact-form' },
   ];
 
   return (
