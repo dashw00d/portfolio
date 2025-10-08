@@ -133,9 +133,6 @@ export default function Projects() {
                   ) : (
                     <span className="text-sm font-medium text-zinc-400">Walkthrough video coming soon</span>
                   )}
-                  <span className="rounded-full border border-success-200 bg-success-50 px-3 py-1 text-xs font-semibold text-success-600">
-                    Ship-ready
-                  </span>
                 </div>
               </article>
             ))}
