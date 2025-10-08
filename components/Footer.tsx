@@ -15,21 +15,21 @@ export default function Footer() {
             </p>
             <div className="flex gap-4">
               <a
-                href="https://linkedin.com/in/ryanstefan"
+                href="https://www.linkedin.com/in/ryan-stefan-austin/"
                 className="text-zinc-400 hover:text-white transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href="https://github.com/ryanstefan"
+                href="https://github.com/dashw00d"
                 className="text-zinc-400 hover:text-white transition-colors"
                 aria-label="GitHub"
               >
                 <Github className="h-5 w-5" />
               </a>
               <a
-                href="https://twitter.com/ryanstefan"
+                href="https://x.com/dashwizzle"
                 className="text-zinc-400 hover:text-white transition-colors"
                 aria-label="Twitter"
               >
