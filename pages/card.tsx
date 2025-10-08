@@ -28,7 +28,42 @@ export default function Card() {
       <Head>
         <title>Ryan Stefan Business Card</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Digital business card for Ryan Stefan - Optimize. Build. Grow. Contact: (737) 205-9226 | ryan@dashwood.net" />
+        <meta name="author" content="Ryan Stefan" />
+        <meta name="keywords" content="Ryan Stefan, business card, dashwood, contact, web development, optimization" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="Ryan Stefan Business Card" />
+        <meta property="og:description" content="Optimize. Build. Grow. Contact Ryan Stefan at (737) 205-9226 or ryan@dashwood.net" />
+        <meta property="og:type" content="profile" />
+        <meta property="og:url" content="https://dashwood.net/card" />
+        <meta property="og:image" content="https://dashwood.net/images/dashwood_qr.png" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Ryan Stefan Business Card" />
+        <meta name="twitter:description" content="Optimize. Build. Grow. Contact: (737) 205-9226 | ryan@dashwood.net" />
+        <meta name="twitter:image" content="https://dashwood.net/images/dashwood_qr.png" />
+
+        <link rel="canonical" href="https://dashwood.net/card" />
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+
+        {/* Schema.org structured data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Ryan Stefan",
+              "telephone": "(737) 205-9226",
+              "email": "ryan@dashwood.net",
+              "url": "https://dashwood.net",
+              "jobTitle": "Web Developer",
+              "description": "Optimize. Build. Grow."
+            })
+          }}
+        />
       </Head>
 
       <style jsx global>{`

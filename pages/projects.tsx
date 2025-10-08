@@ -49,10 +49,72 @@ export default function Projects() {
   return (
     <>
       <Head>
-        <title>Project Demos - Ryan Stefan</title>
+        <title>Project Demos - Ryan Stefan | Web Development Portfolio</title>
         <meta
           name="description"
-          content="Preview demo builds and case studies that show how Ryan Stefan helps business owners fix tech pain points fast."
+          content="Preview demo builds and case studies that show how Ryan Stefan helps business owners fix tech pain points fast. Landing pages, dashboards, and automation systems."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="keywords" content="web development portfolio, project demos, Laravel projects, Next.js projects, case studies, Ryan Stefan, dashwood" />
+        <meta name="author" content="Ryan Stefan" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="Project Demos - Ryan Stefan" />
+        <meta property="og:description" content="Preview demo builds and case studies showing real-world solutions: landing pages, deliverability dashboards, and attribution scorecards." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://dashwood.net/projects" />
+        <meta property="og:site_name" content="Ryan Stefan - Dashwood" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Project Demos - Ryan Stefan" />
+        <meta name="twitter:description" content="Preview demo builds and case studies showing real-world solutions for business tech problems." />
+
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="canonical" href="https://dashwood.net/projects" />
+
+        {/* Schema.org structured data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CollectionPage",
+              "name": "Project Demos - Ryan Stefan",
+              "description": "A curated collection of web development projects and case studies by Ryan Stefan.",
+              "url": "https://dashwood.net/projects",
+              "author": {
+                "@type": "Person",
+                "name": "Ryan Stefan",
+                "jobTitle": "Web Developer",
+                "email": "ryan@dashwood.net",
+                "telephone": "(737) 205-9226"
+              },
+              "mainEntity": {
+                "@type": "ItemList",
+                "itemListElement": [
+                  {
+                    "@type": "SoftwareApplication",
+                    "name": "Conversion-Ready Service Landing Page",
+                    "description": "A modular Next.js build that scores 99/100 on Lighthouse, includes pre-written testimonials, FAQs, and contact forms wired to HubSpot.",
+                    "applicationCategory": "WebApplication"
+                  },
+                  {
+                    "@type": "SoftwareApplication",
+                    "name": "Deliverability Dashboard",
+                    "description": "A Laravel + Livewire console that monitors SPF/DKIM, bounce rates, and sender scores.",
+                    "applicationCategory": "WebApplication"
+                  },
+                  {
+                    "@type": "SoftwareApplication",
+                    "name": "Attribution Scorecard",
+                    "description": "Client-ready dashboard that breaks down traffic sources, revenue, and campaign ROI with exportable reports.",
+                    "applicationCategory": "WebApplication"
+                  }
+                ]
+              }
+            })
+          }}
         />
       </Head>
 
