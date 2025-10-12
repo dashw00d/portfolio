@@ -1,5 +1,4 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import { ServerCrash, MailX, UserX, EyeOff } from "lucide-react";
 import TerminalBlock from "./TerminalBlock";
 
@@ -224,7 +223,7 @@ function TerminalAudit() {
   return (
     <div className="relative mt-20 sm:mt-16">
       <div className="pointer-events-none absolute left-1/2 -top-[32px] flex w-32 -translate-x-1/2 drop-shadow-2xl sm:w-40">
-        <Image
+        <img
           src="/images/doggo.png"
           alt="Friendly dog peeking over the diagnostics terminal"
           width={128}

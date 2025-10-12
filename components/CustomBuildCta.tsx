@@ -19,10 +19,10 @@ export default function CustomBuildCta({
   return (
     <a
       href={href}
-      className={`group relative inline-flex items-center justify-start overflow-hidden rounded-2xl px-0 py-0 text-left transition-transform hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${className}`}
+      className={`group relative inline-block rounded-2xl p-[2px] text-left transition-transform hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${className}`}
     >
-      <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-brand-600 via-accent-600 to-brand-700 opacity-80 blur-lg transition duration-500 group-hover:opacity-100 group-hover:blur-xl" aria-hidden />
-      <span className="relative flex w-full items-center gap-4 rounded-2xl border border-white/90 bg-white/90 px-6 py-4 shadow-lg shadow-brand-900/10 backdrop-blur">
+      <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-brand-600 via-accent-600 to-brand-700 opacity-50 blur-sm transition duration-300 group-hover:opacity-75 group-hover:blur-sm" aria-hidden />
+      <span className="relative flex w-full items-center gap-4 rounded-[calc(1rem-1px)] bg-white px-6 py-4 shadow-lg shadow-brand-900/10">
         <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand-600 to-accent-600 text-white shadow-md shadow-brand-900/20">
           <Sparkles className="h-6 w-6" />
         </span>

@@ -1,0 +1,74 @@
+---
+title: "Setting Up an MDX Blog with Next.js"
+date: "2025-10-10"
+excerpt: "Building a static MDX-powered blog that supports custom React components and syntax highlighting."
+tags: ["next.js", "mdx", "react", "web development"]
+author: "Ryan Stefan"
+---
+
+Today I built a custom MDX blog system for my portfolio site. The goal was to have full control over styling while keeping the content workflow simple and static.
+
+## Why MDX?
+
+MDX combines the simplicity of Markdown with the power of React components. This means I can:
+
+- Write content in plain Markdown
+- Embed custom React components when needed
+- Keep everything version-controlled
+- Deploy as static files
+
+## The Setup
+
+The architecture is straightforward:
+
+```typescript
+// File structure
+/content/blog/
+  2025-10-10-post-slug.mdx
+/pages/blog/
+  index.tsx          // Blog listing
+  [slug].tsx         // Individual posts
+```
+
+### Dependencies
+
+I'm using:
+- `gray-matter` for parsing frontmatter
+- `next-mdx-remote` for rendering MDX in static exports
+- `rehype-highlight` for syntax highlighting
+
+```bash
+npm install gray-matter next-mdx-remote rehype-highlight
+```
+
+## Content Structure
+
+Each post is an MDX file with YAML frontmatter:
+
+```yaml
+---
+title: "Post Title"
+date: "2025-10-10"
+excerpt: "A brief description"
+tags: ["tag1", "tag2"]
+---
+```
+
+## Static Generation
+
+The blog uses Next.js static generation:
+
+1. `getStaticPaths` - Reads all MDX files, generates routes
+2. `getStaticProps` - Parses frontmatter and content for each post
+3. Static HTML generated at build time
+
+## What's Next?
+
+Some features I'm planning to add:
+
+- Tag filtering
+- Reading time estimates
+- Table of contents for longer posts
+- RSS feed generation
+
+This setup gives me the flexibility to write daily dev logs with custom components when I need them, while keeping the deployment simple and fast.

@@ -99,8 +99,15 @@ module.exports = {
           950: withOpacityValue('--color-danger-950'),
           DEFAULT: withOpacityValue('--color-danger-500'),
         },
+        // ForgeKit brand colors
+        'forgekit-green': '#1e493d',
+        'forgekit-zinc': '#18181b',
+        'forgekit-tan': '#CDB380',
+        'forgekit-dark': '#031634',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }

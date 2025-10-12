@@ -144,7 +144,7 @@ export default function Projects() {
                 className="mx-auto w-full max-w-xl"
                 eyebrow="Have a blank canvas?"
                 headline="Kick off a custom product build"
-                subcopy="Share your roadmap and I\'ll scope the architecture, team, and delivery milestones."
+                subcopy="Share your roadmap and I'll scope the architecture, team, and delivery milestones."
               />
             </div>
           </div>
