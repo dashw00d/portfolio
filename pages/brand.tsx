@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import { ArrowLeft, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
 
@@ -169,10 +170,10 @@ export default function BrandKit() {
         {/* Header */}
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-sm">
           <div className="mx-auto max-w-7xl px-6 py-6">
-            <Link href={`/`}>
+            <Link href="/" className="inline-flex items-center gap-2 text-brand-600 hover:text-brand-700 transition">
               <ArrowLeft className="h-4 w-4" />
               Back to Home
-            </a>
+            </Link>
             <h1 className="mt-4 text-4xl font-bold text-zinc-900">Brand Kit</h1>
             <p className="mt-2 text-lg text-zinc-600">
               Design system and brand guidelines for consistent UI development
