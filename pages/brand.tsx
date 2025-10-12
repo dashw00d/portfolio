@@ -169,10 +169,7 @@ export default function BrandKit() {
         {/* Header */}
         <header className="border-b border-zinc-200 bg-white/80 backdrop-blur-sm">
           <div className="mx-auto max-w-7xl px-6 py-6">
-            <a
-              href="/"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-brand-600 transition hover:text-brand-700"
-            >
+            <Link href={`/`}>
               <ArrowLeft className="h-4 w-4" />
               Back to Home
             </a>
