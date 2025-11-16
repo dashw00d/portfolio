@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import Head from "next/head";
+import Link from "next/link";
 import {
   CheckCircle2,
   Image,
@@ -22,13 +23,163 @@ import {
   Sparkles,
   ArrowRight,
   PlayCircle,
-  ChevronLeft,
-  ChevronRight,
   Database,
-  Share2,
   FileCheck,
   Folder,
+  ArrowLeft,
+  Home,
+  type LucideIcon,
 } from "lucide-react";
+
+/* ========================================
+   NAVIGATION COMPONENT
+   ======================================== */
+
+function NavigationBar() {
+  return (
+    <>
+      {/* Skip to main content link for keyboard users */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-emerald-500 focus:text-white focus:rounded-lg focus:shadow-lg"
+      >
+        Skip to main content
+      </a>
+
+      <nav
+        className="w-full bg-zinc-950 border-b border-white/5"
+        role="navigation"
+        aria-label="Main navigation"
+      >
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+          <div className="flex items-center justify-between h-12">
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-white hover:text-emerald-400 transition-colors group"
+              aria-label="Return to home page"
+            >
+              <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
+              <span className="font-semibold text-sm">Back to Home</span>
+            </Link>
+
+            <div className="flex items-center gap-6">
+              <Link
+                href="/"
+                className="text-white/70 hover:text-white transition-colors text-sm font-medium"
+                aria-label="Navigate to home page"
+              >
+                <Home className="h-5 w-5" aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </>
+  );
+}
+
+/* ========================================
+   EMAIL CAPTURE COMPONENT
+   ======================================== */
+
+type EmailCaptureVariant = 'hero' | 'cta';
+
+function EmailCaptureForm({ variant = 'hero' }: { variant?: EmailCaptureVariant }) {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      setStatus('error');
+      setErrorMessage('Please enter a valid email address');
+      return;
+    }
+
+    setStatus('loading');
+    setErrorMessage('');
+
+    // Simulate API call (replace with actual implementation)
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // TODO: Replace with actual API call
+      // await fetch('/api/early-access', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email })
+      // });
+
+      setStatus('success');
+      setEmail('');
+    } catch (error) {
+      setStatus('error');
+      setErrorMessage('Something went wrong. Please try again.');
+    }
+  };
+
+  const isHero = variant === 'hero';
+
+  if (status === 'success') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className={`${isHero ? 'max-w-lg' : 'max-w-2xl mx-auto'} rounded-xl p-4 ${isHero ? 'bg-emerald-500/10 border border-emerald-500/30' : 'bg-white/10 border border-white/30'}`}
+      >
+        <div className="flex items-center gap-3">
+          <CheckCircle2 className={`h-6 w-6 ${isHero ? 'text-emerald-400' : 'text-white'}`} />
+          <div>
+            <p className={`font-semibold ${isHero ? 'text-emerald-200' : 'text-white'}`}>Request received!</p>
+            <p className={`text-sm ${isHero ? 'text-emerald-300/80' : 'text-white/80'}`}>We'll be in touch within 24 hours.</p>
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
+
+  return (
+    <div className={isHero ? 'max-w-lg' : 'max-w-2xl mx-auto'}>
+      <p className={`mb-3 text-sm font-semibold ${isHero ? 'text-emerald-200' : 'text-white'}`}>
+        Request Early Access:
+      </p>
+      <form onSubmit={handleSubmit} className={`flex ${isHero ? 'gap-3' : 'flex-col sm:flex-row gap-4'}`}>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Your work email"
+          className={`flex-1 ${isHero ? 'px-5 py-3.5 rounded-xl' : 'px-6 py-4 rounded-2xl'} ${isHero ? 'bg-white/5 border border-white/20' : 'bg-white/10 border-2 border-white/30'} text-white ${isHero ? 'placeholder-zinc-400' : 'placeholder-white/60'} backdrop-blur focus:outline-none focus:ring-2 ${isHero ? 'focus:ring-emerald-400/50' : 'focus:ring-white/50 focus:bg-white/15'} transition text-base ${isHero ? '' : 'text-lg'}`}
+          aria-label="Email address for early access"
+          disabled={status === 'loading'}
+        />
+        <button
+          type="submit"
+          disabled={status === 'loading'}
+          className={`${isHero ? 'px-6 py-3.5 rounded-xl' : 'px-8 py-4 rounded-2xl'} ${isHero ? 'bg-emerald-500 text-white hover:bg-emerald-400' : 'bg-white text-emerald-700 hover:bg-emerald-50'} font-bold transition ${isHero ? 'shadow-lg' : 'shadow-2xl'} text-base ${isHero ? '' : 'text-lg'} whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed`}
+        >
+          {status === 'loading' ? 'Sending...' : 'Request Access →'}
+        </button>
+      </form>
+      {status === 'error' && errorMessage && (
+        <motion.p
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`mt-2 text-sm ${isHero ? 'text-red-300' : 'text-red-200'}`}
+        >
+          {errorMessage}
+        </motion.p>
+      )}
+      <p className={`mt-2.5 text-xs ${isHero ? 'text-zinc-400' : 'text-emerald-50'}`}>
+        No credit card required. Live in 24 hours.
+      </p>
+    </div>
+  );
+}
 
 export default function ForgeKitMultiSectionDemo() {
   return (
@@ -41,13 +192,14 @@ export default function ForgeKitMultiSectionDemo() {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <div className="w-full">
+      <NavigationBar />
+      <main id="main-content" className="w-full">
         <HeroSection />
         <BuildingBlocksSection />
         <IndustryExamplesSection />
         <InteractiveDemoSection />
         <CustomBuilderSection />
-      </div>
+      </main>
     </>
   );
 }
@@ -58,7 +210,10 @@ export default function ForgeKitMultiSectionDemo() {
 
 function HeroSection() {
   return (
-    <section className="relative isolate w-full min-h-[84vh] flex items-center bg-zinc-950 text-white overflow-hidden">
+    <section
+      className="relative isolate w-full min-h-[84vh] flex items-center bg-zinc-950 text-white overflow-hidden"
+      aria-label="Hero section"
+    >
       {/* Background: single vignette + diagonal tint */}
       <div
         aria-hidden="true"
@@ -119,30 +274,9 @@ function HeroSection() {
               ))}
             </div>
 
-            {/* CTA */}
+            {/* Early Access Email Capture */}
             <div className="mt-7">
-              <a
-                href="#demo"
-                className="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-white text-emerald-700 font-bold text-lg shadow-xl hover:shadow-emerald-500/30 hover:bg-emerald-50 transition"
-              >
-                Request Early Access →
-              </a>
-            </div>
-
-            {/* Email capture (optional; keeps hierarchy light) */}
-            <div className="mt-5 max-w-md">
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder="Enter your email for early access"
-                  className="flex-1 px-4 py-2 rounded-xl bg-white/5 border border-white/15 text-white placeholder-zinc-400 backdrop-blur focus:outline-none focus:ring-2 focus:ring-emerald-400/50"
-                  aria-label="Email address"
-                />
-                <button className="px-5 py-2 rounded-xl bg-emerald-500 text-white font-semibold hover:bg-emerald-400 transition">
-                  Get Access
-                </button>
-              </div>
-              <p className="mt-2 text-xs text-zinc-400">No credit card required. Live in 24 hours.</p>
+              <EmailCaptureForm variant="hero" />
             </div>
           </motion.div>
 
@@ -161,19 +295,19 @@ function HeroSection() {
             </div>
           </motion.div>
         </div>
+      </div>
 
-        {/* Scroll nudge */}
-        <div className="absolute left-1/2 -translate-x-1/2 bottom-6 hidden md:flex flex-col items-center gap-2 text-zinc-400">
-          <span className="text-sm">See what you can build</span>
-          <motion.span
-            aria-hidden
-            animate={{ y: [0, 6, 0] }}
-            transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-            className="text-emerald-400 text-2xl"
-          >
-            ↓
-          </motion.span>
-        </div>
+      {/* Scroll nudge */}
+      <div className="absolute left-1/2 -translate-x-1/2 bottom-8 hidden md:flex flex-col items-center gap-2 text-zinc-400">
+        <span className="text-sm">See what you can build</span>
+        <motion.span
+          aria-hidden
+          animate={{ y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+          className="text-emerald-400 text-2xl"
+        >
+          ↓
+        </motion.span>
       </div>
     </section>
   );
@@ -184,7 +318,14 @@ function HeroSection() {
    SECTION 2: BUILDING BLOCKS GALLERY
    ======================================== */
 
-const AUTOMATION_BLOCKS = [
+type AutomationBlock = {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+  desc: string;
+};
+
+const AUTOMATION_BLOCKS: AutomationBlock[] = [
   { id: 'photo', label: 'Photo Capture', icon: Camera, desc: 'Photos with timestamps' },
   { id: 'ocr', label: 'Text Extract', icon: ScanText, desc: 'Scan receipts automatically' },
   { id: 'gps', label: 'Location Tracking', icon: MapPin, desc: 'Track team locations' },
@@ -201,7 +342,10 @@ const AUTOMATION_BLOCKS = [
 
 function BuildingBlocksSection() {
   return (
-    <section className="relative w-full py-16 md:py-20 bg-gradient-to-b from-white via-zinc-50/50 to-white overflow-hidden">
+    <section
+      className="relative w-full py-16 md:py-20 bg-gradient-to-b from-white via-zinc-50/50 to-white overflow-hidden"
+      aria-labelledby="building-blocks-heading"
+    >
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-40">
         <div className="absolute top-20 right-20 w-[500px] h-[500px] bg-emerald-100 rounded-full blur-3xl" />
@@ -216,7 +360,7 @@ function BuildingBlocksSection() {
           transition={{ duration: 0.7 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">
+          <h2 id="building-blocks-heading" className="text-3xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">
             Everything Your Field Team Needs
           </h2>
           <p className="mt-4 text-lg md:text-xl text-zinc-600 max-w-4xl mx-auto leading-relaxed">
@@ -236,7 +380,7 @@ function BuildingBlocksSection() {
   );
 }
 
-function BuildingBlockCard({ block, delay }: { block: typeof AUTOMATION_BLOCKS[0]; delay: number }) {
+function BuildingBlockCard({ block, delay }: { block: AutomationBlock; delay: number }) {
   const Icon = block.icon;
   return (
     <motion.div
@@ -268,7 +412,20 @@ function BuildingBlockCard({ block, delay }: { block: typeof AUTOMATION_BLOCKS[0
    SECTION 3: INDUSTRY EXAMPLES CAROUSEL
    ======================================== */
 
-const INDUSTRY_EXAMPLES = [
+type IndustryColor = 'blue' | 'purple' | 'green' | 'orange' | 'teal';
+
+type IndustryExample = {
+  id: string;
+  industry: string;
+  workflow: string;
+  problem: string;
+  steps: JobStep[];
+  saves: string;
+  icon: LucideIcon;
+  color: IndustryColor;
+};
+
+const INDUSTRY_EXAMPLES: IndustryExample[] = [
   {
     id: 'towing',
     industry: 'Towing & Booting',
@@ -348,7 +505,10 @@ function IndustryExamplesSection() {
   const example = INDUSTRY_EXAMPLES[activeIdx];
 
   return (
-    <section className="relative w-full py-16 md:py-24 overflow-hidden bg-gradient-to-br from-zinc-50 via-white to-zinc-50">
+    <section
+      className="relative w-full py-16 md:py-24 overflow-hidden bg-gradient-to-br from-zinc-50 via-white to-zinc-50"
+      aria-labelledby="industry-examples-heading"
+    >
       {/* Subtle animated background elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-20 left-10 w-72 h-72 bg-emerald-200 rounded-full blur-3xl animate-pulse" />
@@ -364,7 +524,7 @@ function IndustryExamplesSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">
+            <h2 id="industry-examples-heading" className="text-3xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">
               Real-World Automation
             </h2>
             <p className="mt-3 text-base md:text-lg text-zinc-600 max-w-3xl mx-auto">
@@ -403,7 +563,7 @@ function IndustryExamplesSection() {
   );
 }
 
-function IndustryShowcase({ example }: { example: typeof INDUSTRY_EXAMPLES[0] }) {
+function IndustryShowcase({ example }: { example: IndustryExample }) {
   const Icon = example.icon;
   const colorMap = {
     blue: { gradient: 'from-blue-500/10 via-blue-400/5 to-transparent', accent: 'bg-blue-500', icon: 'text-blue-600', glow: 'shadow-blue-500/50' },
@@ -507,7 +667,17 @@ function IndustryShowcase({ example }: { example: typeof INDUSTRY_EXAMPLES[0] })
   );
 }
 
-function PipelineStepLarge({ step, index, isLast, colors }: { step: { label: string; icon: any }; index: number; isLast: boolean; colors: any }) {
+function PipelineStepLarge({
+  step,
+  index,
+  isLast,
+  colors
+}: {
+  step: JobStep;
+  index: number;
+  isLast: boolean;
+  colors: { gradient: string; accent: string; icon: string; glow: string };
+}) {
   const StepIcon = step.icon;
   return (
     <>
@@ -550,6 +720,21 @@ function PipelineStepLarge({ step, index, isLast, colors }: { step: { label: str
 
 type Staff = { id: string; name: string };
 
+type JobColor = 'emerald' | 'sky' | 'amber' | 'purple' | 'rose';
+
+type JobStep = {
+  label: string;
+  icon: LucideIcon;
+};
+
+type Job = {
+  id: string;
+  title: string;
+  description: string;
+  color: JobColor;
+  steps: JobStep[];
+};
+
 function InteractiveDemoSection() {
   const staff: Staff[] = [
     { id: "mike", name: "Mike Davis" },
@@ -568,13 +753,13 @@ function InteractiveDemoSection() {
   const [toast, setToast] = useState<{ msg: string; key: number } | null>(null);
   const [beamKey, setBeamKey] = useState(0);
 
-  const jobs = useMemo(
+  const jobs: Job[] = useMemo(
     () => [
       {
         id: "checkin",
         title: "Smart Check-In",
         description: "GPS check-in → SMS customer → log arrival",
-        color: "emerald" as const,
+        color: "emerald",
         steps: [
           { label: "GPS Check-In", icon: MapPin },
           { label: "SMS Customer", icon: MessageCircle },
@@ -585,7 +770,7 @@ function InteractiveDemoSection() {
         id: "submit",
         title: "Job Photos",
         description: "Capture → OCR extract → upload to cloud",
-        color: "sky" as const,
+        color: "sky",
         steps: [
           { label: "Capture Photo", icon: Image },
           { label: "OCR Extract", icon: ScanText },
@@ -596,7 +781,7 @@ function InteractiveDemoSection() {
         id: "hours",
         title: "Log Hours",
         description: "Time entry → notify manager → sync CRM",
-        color: "amber" as const,
+        color: "amber",
         steps: [
           { label: "Time Entry", icon: Clock },
           { label: "Notify Manager", icon: Phone },
@@ -607,7 +792,7 @@ function InteractiveDemoSection() {
         id: "receipt",
         title: "Receipt Upload",
         description: "Snap photo → OCR extract → sync accounting",
-        color: "purple" as const,
+        color: "purple",
         steps: [
           { label: "Photo Receipt", icon: Camera },
           { label: "OCR Extract", icon: ScanText },
@@ -618,7 +803,7 @@ function InteractiveDemoSection() {
         id: "sign",
         title: "Customer Signature",
         description: "E-signature → SMS receipt → update CRM",
-        color: "rose" as const,
+        color: "rose",
         steps: [
           { label: "E-Signature", icon: FileText },
           { label: "SMS Receipt", icon: MessageSquare },
@@ -646,7 +831,10 @@ function InteractiveDemoSection() {
   const visibleJobs = jobs.filter((j) => assigned[j.id]?.[focusedStaff.id]);
 
   return (
-    <section className="relative w-full py-16 md:py-24 bg-gradient-to-b from-white via-zinc-50/30 to-white overflow-hidden">
+    <section
+      className="relative w-full py-16 md:py-24 bg-gradient-to-b from-white via-zinc-50/30 to-white overflow-hidden"
+      aria-labelledby="interactive-demo-heading"
+    >
       {/* Background elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-40 left-1/4 w-96 h-96 bg-emerald-200 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
@@ -665,7 +853,7 @@ function InteractiveDemoSection() {
             <PlayCircle className="h-5 w-5" />
             Interactive Demo
           </span>
-          <h2 className="mt-4 text-3xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">
+          <h2 id="interactive-demo-heading" className="mt-4 text-3xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">
             Try It: Assign Workflows to Your Team
           </h2>
           <p className="mt-4 text-lg md:text-xl text-zinc-600 max-w-4xl mx-auto leading-relaxed">
@@ -796,21 +984,35 @@ function JobToggleCard({
   checked,
   onToggle,
 }: {
-  job: any;
+  job: Job;
   checked: boolean;
   onToggle: () => void;
 }) {
+  const colorClasses: Record<JobColor, { bg: string; ring: string; icon: string }> = {
+    emerald: { bg: 'bg-emerald-50', ring: 'ring-emerald-200', icon: 'text-emerald-600' },
+    sky: { bg: 'bg-sky-50', ring: 'ring-sky-200', icon: 'text-sky-600' },
+    amber: { bg: 'bg-amber-50', ring: 'ring-amber-200', icon: 'text-amber-600' },
+    purple: { bg: 'bg-purple-50', ring: 'ring-purple-200', icon: 'text-purple-600' },
+    rose: { bg: 'bg-rose-50', ring: 'ring-rose-200', icon: 'text-rose-600' },
+  };
+
+  const colors = colorClasses[job.color];
+
   return (
     <div className="group rounded-2xl bg-white shadow-lg ring-1 ring-zinc-100 p-4 md:p-5 hover:shadow-xl transition">
       <div className="flex items-center gap-4">
-        <div className={`shrink-0 grid place-items-center h-12 w-12 rounded-xl bg-${job.color}-50 ring-1 ring-${job.color}-200`}>
-          <CubeIcon className={`h-6 w-6 text-${job.color}-600`} />
+        <div className={`shrink-0 grid place-items-center h-12 w-12 rounded-xl ${colors.bg} ring-1 ${colors.ring}`}>
+          <CubeIcon className={`h-6 w-6 ${colors.icon}`} />
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="text-lg font-bold text-zinc-900">{job.title}</h3>
           <p className="text-sm text-zinc-500">{job.description}</p>
         </div>
-        <ToggleSwitch checked={checked} onChange={onToggle} />
+        <ToggleSwitch
+          checked={checked}
+          onChange={onToggle}
+          label={`${checked ? 'Disable' : 'Enable'} ${job.title} workflow`}
+        />
       </div>
     </div>
   );
@@ -1000,39 +1202,94 @@ function PhoneMock({ children, employeeName }: { children: React.ReactNode; empl
   );
 }
 
-function JobCard({ job }: { job: any }) {
+function JobCard({ job }: { job: Job }) {
+  const colorClasses: Record<JobColor, {
+    card: string;
+    title: string;
+    status: string;
+    badge: string;
+  }> = {
+    emerald: {
+      card: 'border-emerald-200 bg-emerald-50',
+      title: 'text-emerald-800',
+      status: 'text-emerald-800',
+      badge: 'border-emerald-200 bg-emerald-100 text-emerald-900',
+    },
+    sky: {
+      card: 'border-sky-200 bg-sky-50',
+      title: 'text-sky-800',
+      status: 'text-sky-800',
+      badge: 'border-sky-200 bg-sky-100 text-sky-900',
+    },
+    amber: {
+      card: 'border-amber-200 bg-amber-50',
+      title: 'text-amber-800',
+      status: 'text-amber-800',
+      badge: 'border-amber-200 bg-amber-100 text-amber-900',
+    },
+    purple: {
+      card: 'border-purple-200 bg-purple-50',
+      title: 'text-purple-800',
+      status: 'text-purple-800',
+      badge: 'border-purple-200 bg-purple-100 text-purple-900',
+    },
+    rose: {
+      card: 'border-rose-200 bg-rose-50',
+      title: 'text-rose-800',
+      status: 'text-rose-800',
+      badge: 'border-rose-200 bg-rose-100 text-rose-900',
+    },
+  };
+
+  const colors = colorClasses[job.color];
+
   return (
     <motion.div
       layout
       initial={{ y: 14, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: 12, opacity: 0 }}
-      className={`rounded-2xl border border-${job.color}-200 bg-${job.color}-50 p-3 shadow-sm`}
+      className={`rounded-2xl border ${colors.card} p-3 shadow-sm`}
     >
       <div className="flex items-center justify-between">
-        <div className={`text-[13px] font-extrabold text-${job.color}-800`}>{job.title}</div>
-        <span className={`text-[11px] text-${job.color}-800 opacity-80`}>Active</span>
+        <div className={`text-[13px] font-extrabold ${colors.title}`}>{job.title}</div>
+        <span className={`text-[11px] ${colors.status} opacity-80`}>Active</span>
       </div>
       <p className="mt-1 text-[12px] text-zinc-600">{job.description}</p>
       <div className="mt-2 flex flex-wrap gap-1.5">
-        {job.steps.map((s: any, idx: number) => (
-          <span
-            key={idx}
-            className={`inline-flex items-center gap-1 rounded-full border border-${job.color}-200 bg-${job.color}-100 px-2.5 py-1 text-[11px] font-semibold text-${job.color}-900`}
-          >
-            <s.icon className="h-3.5 w-3.5" /> {s.label}
-          </span>
-        ))}
+        {job.steps.map((s, idx: number) => {
+          const StepIcon = s.icon;
+          return (
+            <span
+              key={idx}
+              className={`inline-flex items-center gap-1 rounded-full border ${colors.badge} px-2.5 py-1 text-[11px] font-semibold`}
+            >
+              <StepIcon className="h-3.5 w-3.5" /> {s.label}
+            </span>
+          );
+        })}
       </div>
     </motion.div>
   );
 }
 
-function ToggleSwitch({ checked, onChange }: { checked: boolean; onChange: (v: boolean) => void }) {
+function ToggleSwitch({
+  checked,
+  onChange,
+  label
+}: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  label?: string;
+}) {
   return (
     <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={label || (checked ? 'Disable workflow' : 'Enable workflow')}
       onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-7 w-12 items-center rounded-full transition shadow-inner ${
+      className={`relative inline-flex h-7 w-12 items-center rounded-full transition shadow-inner focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 ${
         checked ? "bg-emerald-500" : "bg-zinc-300"
       }`}
     >
@@ -1040,6 +1297,7 @@ function ToggleSwitch({ checked, onChange }: { checked: boolean; onChange: (v: b
         className={`inline-block h-6 w-6 transform rounded-full bg-white shadow transition ${
           checked ? "translate-x-6" : "translate-x-1"
         }`}
+        aria-hidden="true"
       />
     </button>
   );
@@ -1076,7 +1334,10 @@ function Beam() {
 
 function CustomBuilderSection() {
   return (
-    <section className="relative w-full py-20 md:py-32 bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 text-white overflow-hidden">
+    <section
+      className="relative w-full py-20 md:py-32 bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 text-white overflow-hidden"
+      aria-labelledby="cta-heading"
+    >
       {/* Dynamic background effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 opacity-20" style={{
@@ -1094,9 +1355,9 @@ function CustomBuilderSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <Sparkles className="h-12 w-12 mx-auto mb-6 text-emerald-200" />
+          <Sparkles className="h-12 w-12 mx-auto mb-6 text-emerald-200" aria-hidden="true" />
 
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+          <h2 id="cta-heading" className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
             Build the Solution<br />You&apos;ve Been Imagining
           </h2>
 
@@ -1125,22 +1386,9 @@ function CustomBuilderSection() {
             </div>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-8">
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-10 py-5 rounded-2xl bg-white text-emerald-700 font-bold text-xl hover:bg-emerald-50 transition shadow-2xl"
-            >
-              Schedule a Demo
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-10 py-5 rounded-2xl bg-white/20 backdrop-blur text-white font-bold text-xl hover:bg-white/30 transition border-2 border-white/50 shadow-xl"
-            >
-              See Pricing
-            </motion.button>
+          {/* Early Access Email Capture */}
+          <div className="mb-10">
+            <EmailCaptureForm variant="cta" />
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6 text-base text-emerald-50">
