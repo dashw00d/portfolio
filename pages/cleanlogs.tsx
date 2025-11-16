@@ -13,14 +13,16 @@ type CleaningOptions = {
 const defaultOptions: CleaningOptions = {
   removeStackLines: true,
   removeFrameworkNoise: true,
-  keepOnlyErrorLines: true,
+  keepOnlyErrorLines: false,
   dedupeLines: true,
 };
 
 function cleanLogs(raw: string, options: CleaningOptions): string {
   const lines = raw.split(/\r?\n/);
 
-  const errorRegex = /Alpine Expression Error:|Uncaught ReferenceError:|TypeError:|SyntaxError:/i;
+  // Broader error matcher to keep Alpine/Livewire + generic console errors
+  const errorRegex =
+    /Alpine (Expression )?Error:|Uncaught\s+\w*Error:|ReferenceError|TypeError|SyntaxError|conditionBuilder|preview is not defined|expanded is not defined|logic is not defined|rules is not defined|Pusher|Livewire/i;
 
   const cleaned: string[] = [];
 
@@ -35,16 +37,21 @@ function cleanLogs(raw: string, options: CleaningOptions): string {
       continue;
     }
 
-    if (options.removeStackLines && /^\s*at\s+.+/.test(line)) {
+    const looksLikeStack =
+      /^\s*at\s+.+/.test(line) || // standard Chrome stack format
+      /^\s*[\w.$<>]+?\s+@\s+.+:\d+/.test(line); // DevTools collapsed stack "fn @ file:line"
+
+    if (options.removeStackLines && looksLikeStack) {
       continue;
     }
 
-    if (
-      options.removeFrameworkNoise &&
-      (/^installHook\.js:\d+/.test(line) ||
-        /^livewire\.js\?id=/.test(line) ||
-        /flushHandlers|deferHandlingDirectives|initTree|morph2/.test(line))
-    ) {
+    const looksLikeNoise =
+      /^installHook\.js:\d+/.test(line) ||
+      /^livewire\.js\?id=/.test(line) ||
+      /^\[Alpine\]/.test(line) ||
+      /flushHandlers|deferHandlingDirectives|initTree|morph2/.test(line);
+
+    if (options.removeFrameworkNoise && looksLikeNoise && !errorRegex.test(line)) {
       continue;
     }
 
@@ -55,10 +62,30 @@ function cleanLogs(raw: string, options: CleaningOptions): string {
     cleaned.push(original);
   }
 
+  let resultLines = cleaned;
+
+  if (options.dedupeLines) {
+    const seen = new Set<string>();
+    const deduped: string[] = [];
+
+    for (const line of resultLines) {
+      const key = line.trim();
+      if (!key) {
+        deduped.push(line);
+        continue;
+      }
+      if (seen.has(key)) continue;
+      seen.add(key);
+      deduped.push(line);
+    }
+
+    resultLines = deduped;
+  }
+
   const compressed: string[] = [];
   let blankStreak = 0;
 
-  for (const line of cleaned) {
+  for (const line of resultLines) {
     if (!line.trim()) {
       blankStreak += 1;
       if (blankStreak > 1) continue;
@@ -68,28 +95,7 @@ function cleanLogs(raw: string, options: CleaningOptions): string {
     compressed.push(line);
   }
 
-  let result = compressed.join('\n');
-
-  if (options.dedupeLines) {
-    const seen = new Set<string>();
-    const deduped: string[] = [];
-
-    for (const line of compressed) {
-      const key = line.trim();
-      if (!key) {
-        deduped.push(line);
-        continue;
-      }
-
-      if (seen.has(key)) continue;
-      seen.add(key);
-      deduped.push(line);
-    }
-
-    result = deduped.join('\n');
-  }
-
-  return result.trim();
+  return compressed.join('\n').trim();
 }
 
 export default function CleanLogsPage() {
@@ -231,6 +237,12 @@ export default function CleanLogsPage() {
                 placeholder="Cleaned logs will appear here..."
                 className="h-full min-h-[60vh] w-full rounded-2xl border border-zinc-200 bg-zinc-50 p-4 font-mono text-sm text-zinc-800 shadow-inner transition focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-100"
               />
+              {input.trim() && !output && (
+                <p className="mt-2 text-sm text-warning-600">
+                  Nothing left after current filters. Try disabling “keep only error lines” or
+                  “remove Livewire/Alpine noise.”
+                </p>
+              )}
               {copyError && (
                 <p className="mt-2 text-sm text-danger-600">{copyError}</p>
               )}
