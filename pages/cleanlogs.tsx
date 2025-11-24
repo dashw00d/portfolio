@@ -39,7 +39,7 @@ function cleanLogs(raw: string, options: CleaningOptions): string {
 
     const looksLikeStack =
       /^\s*at\s+.+/.test(line) || // standard Chrome stack format
-      /^\s*[\w.$<>]+?\s+@\s+.+:\d+/.test(line); // DevTools collapsed stack "fn @ file:line"
+      /^\s*.+?\s+@\s+.+:\d+/.test(line); // DevTools collapsed stack "fn @ file:line"
 
     if (options.removeStackLines && looksLikeStack) {
       continue;
